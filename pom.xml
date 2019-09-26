@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ningdro.course.w3c</groupId>
+    <artifactId>clojure</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <!-- clojure必须的包 -->
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>clojure</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <!-- 对接口参数类型、个数等功能校验的包，方便错误调试 -->
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>core.specs.alpha</artifactId>
+            <version>0.2.44</version>
+        </dependency>
+        <!-- 用来定义数据的结构和类型，并对其数据类型进行校验，并且可以根据spec生成对应的校验数据 -->
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>spec.alpha</artifactId>
+            <version>0.2.176</version>
+        </dependency>
+
+    </dependencies>
+</project>
