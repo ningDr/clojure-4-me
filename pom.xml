@@ -27,6 +27,13 @@
             <artifactId>spec.alpha</artifactId>
             <version>0.2.176</version>
         </dependency>
-
+        <!--clojure 基准测试库-->
+        <!-- https://mvnrepository.com/artifact/criterium/criterium -->
+        <dependency>
+            <groupId>criterium</groupId>
+            <artifactId>criterium</artifactId>
+            <version>0.4.5</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
