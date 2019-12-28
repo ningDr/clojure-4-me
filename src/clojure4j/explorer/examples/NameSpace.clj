@@ -1,0 +1,5 @@
+(ns clojure4j.explorer.examples.NameSpace)
+(println *ns*)
+(alias 'NameSpaceTest 'examples.hello.NameSpace)
+(println *ns*)
+(println all-ns)

@@ -1,5 +1,0 @@
-(ns examples.hello.NameSpace)
-(println *ns*)
-(alias 'NameSpaceTest 'examples.hello.NameSpace)
-(println *ns*)
-(println all-ns)
