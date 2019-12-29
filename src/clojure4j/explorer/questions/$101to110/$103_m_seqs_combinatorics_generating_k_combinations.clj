@@ -13,3 +13,42 @@
   (println (= (arg 4 #{[1 2 3] :a "abc" "efg"}) #{#{[1 2 3] :a "abc" "efg"}}))
   (println (= (arg 2 #{[1 2 3] :a "abc" "efg"}) #{#{[1 2 3] :a} #{[1 2 3] "abc"} #{[1 2 3] "efg"}
                                                   #{:a "abc"} #{:a "efg"} #{"abc" "efg"}})))
+
+(def arg (fn [len coll]
+           (letfn [(gen-set [a b]
+                     (set (for [x a, y b]
+                            (if (set? y)
+                              (conj y x)
+                              (into #{} [x y])))))]
+             (cond
+               (> len (count coll)) #{}
+               (= len (count coll)) #{coll}
+               :else
+               (do (println "11111")
+                   (loop [res #{}, a coll, b (gen-set coll coll), i 1]
+                     (if (= len (count (first res)))
+                       (into #{} res)
+                       (do (println "22222==" i)
+                           (recur (filter #(= i (count %)) b), a, (gen-set a b), (inc i))))))))))
+
+(generating-k-combinations arg)
+;; =====================
+(generating-k-combinations (fn ff [n xs]
+                             (if (zero? n)
+                               #{#{}}
+                               (set (for [x xs
+                                          y (ff (dec n) (disj xs x))]
+                                      (conj y x))))))
+
+(generating-k-combinations (fn [c s]
+                             (if (< (count s) c)
+                               #{}
+                               (if (= (count s) c)
+                                 (conj #{} s)
+                                 (loop [s s result (set (map (comp set vector) s))]
+                                   (if (empty? s)
+                                     (set (filter #(= (count %) c) result))
+                                     (recur (rest s) (into result (map #(into % (vector (first s))) result)))))))))
+
+
+
