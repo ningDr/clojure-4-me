@@ -85,7 +85,7 @@
         mm (map cons (map first pm) (cons nil pm))]
     (loop [agg "" x i-x]
       (if (zero? x)
-        agg
+        agg  
         (let [[[_ n n-str]] (filter #(< x (first %)) mm)
               part (repeat (quot x n) n-str)]
           (recur (apply str agg part) (mod x n)))))))
