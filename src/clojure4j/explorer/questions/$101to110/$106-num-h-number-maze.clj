@@ -33,8 +33,61 @@
   (map #(gen-num-set %) nums))
 
 
+(defn fn-half [n] (if-not (odd? n) (/ n 2) n))
+(defn fn-double [n] (+ n n))
+(defn fn-add2 [n] (+ 2 n))
+(defn gen-set [i col]
+  [(inc i) (into #{} (remove nil? (flatten (map #((juxt fn-half fn-double fn-add2) %) col))))])
 
+(defn cal-times [a b]
+  (if (= a b)
+    1
+    (loop [[i coll] (gen-set 1 [a])]
+      (if (contains? coll b)
+        i
+        (do (println i "========" coll)
+            (recur (gen-set i coll)))))))
 
+(fn [a b]
+  (letfn [(fn-half [n] (if-not (odd? n) (/ n 2) n))
+          (fn-double [n] (+ n n))
+          (fn-add2 [n] (+ 2 n))
+          (gen-set [i col]
+                   [(inc i) (into #{} (remove nil? (flatten (map #((juxt fn-half fn-double fn-add2) %) col))))])]
+    (if (= a b)
+      1
+      (loop [[i coll] (gen-set 1 [a])]
+        (if (contains? coll b)
+          i
+          (do (println i "========" coll)
+              (recur (gen-set i coll))))))))
 
+;; ========================
+(fn [x-i y]
+  (letfn [(spread [x]
+            (concat (when (even? x) [(/ x 2)]) [(* 2 x) (+ 2 x)]))]
+    (loop [i 1 xs [x-i]]
+      (if (some (partial = y) xs)
+        i
+        (recur (inc i) (mapcat spread xs))))))
+
+(fn [s g]
+  (let [f (juxt #(+ % 2) #(* % 2) #(if (even? %) (/ % 2) %))]
+    (loop [ns [s] c 1]
+      (if (some #{g} ns)
+        c
+        (recur (mapcat f ns) (inc c))))))
+
+(fn [s e]
+  (letfn [(step [xs] (set (mapcat #(list (* 2 %) (+ 2 %) (if (even? %) (/ % 2) %)) xs)))]
+    (if (= s e) 1
+        (inc (count (take-while #(not (some #{e} %)) (iterate step #{s})))))))
+
+(letfn [(op [s] (for [si s x [(+ si si)
+                              (when (zero? (mod si 2)) (/ si 2))
+                              (+ si 2)]
+                      :when x] x))
+        (maze [x1 x2] (inc (count (take-while (partial not-any? #{x2}) (iterate op [x1])))))]
+  maze)
 
 
